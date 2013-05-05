@@ -10,20 +10,26 @@
 	$idList = array();	
 	$idListWithKeys = array();
 		$idListWithKeysAfterSave = array();
-	foreach($this->tableSchema->primaryKey as $pkIndex=>$pkName){
-		switch ($pkName) {
-				case 'id':					
-					array_push($idList,"$".$pkName);
-					array_push($idListWithKeys,"'".$pkName ."'"."=> \$_GET['id']");
-					array_push($idListWithKeysAfterSave,"'".$pkName ."'"."=> \$model->".$pkName);
-					break;				
-				default:
-					array_push($idList,"$".$pkName);
-					array_push($idListWithKeys,"'".$pkName ."'"."=> \$".$pkName);
-					array_push($idListWithKeysAfterSave,"'".$pkName ."'"."=> \$model->".$pkName);
-					break;
-			}		
-	}
+		if (is_array($this->tableSchema->primaryKey)){
+			foreach($this->tableSchema->primaryKey as $pkIndex=>$pkName){
+				switch ($pkName) {
+						case 'id':					
+							array_push($idList,"$".$pkName);
+							array_push($idListWithKeys,"'".$pkName ."'"."=> \$_GET['id']");
+							array_push($idListWithKeysAfterSave,"'".$pkName ."'"."=> \$model->".$pkName);
+							break;				
+						default:
+							array_push($idList,"$".$pkName);
+							array_push($idListWithKeys,"'".$pkName ."'"."=> \$".$pkName);
+							array_push($idListWithKeysAfterSave,"'".$pkName ."'"."=> \$model->".$pkName);
+							break;
+					}		
+			}			
+		}else{
+			array_push($idList, "\$".$this->tableSchema->primaryKey);
+			array_push($idListWithKeys,"'".$this->tableSchema->primaryKey ."'"."=> \$_GET['".$this->tableSchema->primaryKey."']");
+			array_push($idListWithKeysAfterSave,"'".$this->tableSchema->primaryKey ."'"."=> \$model->".$this->tableSchema->primaryKey);			
+		}
 	$idList=implode(",", $idList);
 	$idListWithKeys=implode(",", $idListWithKeys);
 	$idListWithKeysAfterSave=implode(",", $idListWithKeysAfterSave);
