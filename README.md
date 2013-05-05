@@ -1,0 +1,4 @@
+giiCompositeComponent
+=====================
+
+Official GiiComposite repository
