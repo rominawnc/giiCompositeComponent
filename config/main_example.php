@@ -26,7 +26,8 @@ return array(
 		**/
 		'gii'=>array(
 			'generatorPaths'=>array(
-	                	'application.giiComposite',   // a path alias
+  'application.giiComposite',   // a path alias
+                'system.gii',   // a path alias
         		),
 			'class'=>'system.gii.GiiModule',
 			'password'=>'1',
